@@ -67,5 +67,40 @@ public class XREALEyeTest : MonoBehaviour
     }
 }
 ```
-3. Connect the RawImage to m_YUVImage
-4. Scale appropriately
+3. Attach to parent GameObject
+4. Connect the RawImage to m_YUVImage
+5. Scale & position the RawImage appropriately
+
+## Respond to the App button
+
+Right click > Create > Input Actions
+
+Action Maps +, New action map, New action, \<No binding>, Path, XR Controller, XREAL Controller, ButtonId0
+
+```csharp
+[SerializeField] private InputActionReference voiceToggleAction;
+
+private void OnEnable() {
+    if (voiceToggleAction != null) {
+        // Activate tracing threads for this asset node
+        voiceToggleAction.action.Enable();
+        // Subscribe your target execution function to the event pipeline
+        voiceToggleAction.action.performed += OnVoiceActionExecuted;
+    }
+}
+
+private void OnDisable() {
+    if (voiceToggleAction != null) {
+        voiceToggleAction.action.performed -= OnVoiceActionExecuted;
+        voiceToggleAction.action.Disable();
+    }
+}
+
+private void OnVoiceActionExecuted(InputAction.CallbackContext context) {
+    // Guard checking ensuring this only fires on the down-press execution window
+    if (context.ReadValueAsButton()) {
+        Debug.Log("Input Map Match: Calling Voice Registration Toggle.");
+        ToggleSpeechRegistration();
+    }
+}
+```
