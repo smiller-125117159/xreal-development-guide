@@ -16,10 +16,10 @@
 2. Delete Main Camera; Directional Light can stay
 3. Add the "XR Interaction Setup" prefab (`Packages/XREAL XR Plugin/Runtime/Prefabs/`) to the scene.
 4. Create new empty GameObject in scene at (0,0,0)
-5. (optional) Add Lazy Follow component
+5. (Optional) Add Lazy Follow component
 5. Create new Canvas as child of above
 6. Set scale on all axes to 0.001
-7. Set width to 960 and height to 540
+7. Set width to 364 and height to 205
 8. Set Render Mode to World Space
 9. Add Tracked Device Graphic Raycaster component
 10. Add RawImage to Canvas & set color
@@ -35,72 +35,71 @@ using UnityEngine.UI;
 
 public class XREALEyeTest : MonoBehaviour
 {
-    [SerializeField]
-    private RawImage m_YUVImage;
+    [SerializeField] private RawImage YUVImage;
 
-    private XREALRGBCameraTexture m_RGBCameraTexture;
+    private XREALRGBCameraTexture RGBCameraTexture;
 
     void Start() {
-        m_RGBCameraTexture = XREALRGBCameraTexture.CreateSingleton();
+        RGBCameraTexture = XREALRGBCameraTexture.CreateSingleton();
         StartCapture();
     }
 
     void Update() {
-        var yuvTextures = m_RGBCameraTexture.GetYUVFormatTextures();
+        var yuvTextures = RGBCameraTexture.GetYUVFormatTextures();
         if (yuvTextures[0] != null) {
-            m_YUVImage.texture = yuvTextures[0];
-            m_YUVImage.material.SetTexture("_UTex", yuvTextures[1]);
-            m_YUVImage.material.SetTexture("_VTex", yuvTextures[2]);
+            YUVImage.texture = yuvTextures[0];
+            YUVImage.material.SetTexture("_UTex", yuvTextures[1]);
+            YUVImage.material.SetTexture("_VTex", yuvTextures[2]);
         }
     }
 
     void StartCapture() {
-        if (!m_RGBCameraTexture.IsCapturing) {
-            m_RGBCameraTexture.StartCapture();
+        if (!RGBCameraTexture.IsCapturing) {
+            RGBCameraTexture.StartCapture();
         }
     }
 
     void StopCapture() {
-        if (m_RGBCameraTexture.IsCapturing) {
-            m_RGBCameraTexture.StopCapture();
+        if (RGBCameraTexture.IsCapturing) {
+            RGBCameraTexture.StopCapture();
         }
     }
 }
 ```
 3. Attach to parent GameObject
-4. Connect the RawImage to m_YUVImage
+4. Connect the RawImage to YUVImage
 5. Scale & position the RawImage appropriately
 
 ## Respond to the App button
 
-Right click > Create > Input Actions
+1. Open `Assets/InputSystem_Actions`.
+2. Click the "+" icon in the Action Maps header.
+3. Rename the new map appropriately (e.g. "XREAL").
+4. Select the map and rename the default action it contains appropriately (e.g. "App Button").<br>
+   Also ensure the action type is set to Button.
 
-Action Maps +, New action map, New action, \<No binding>, Path, XR Controller, XREAL Controller, ButtonId0
-
+5. Expand the action, select "\<No binding>", then set "Path" to `XR Controller > XREAL Controller > ButtonId0`.
+6. Respond to the button via code such as the following:
 ```csharp
-[SerializeField] private InputActionReference voiceToggleAction;
+[SerializeField] private InputActionReference appButtonAction;
 
 private void OnEnable() {
-    if (voiceToggleAction != null) {
-        // Activate tracing threads for this asset node
-        voiceToggleAction.action.Enable();
-        // Subscribe your target execution function to the event pipeline
-        voiceToggleAction.action.performed += OnVoiceActionExecuted;
+    if (appButtonAction != null) {
+        appButtonAction.action.Enable();
+        appButtonAction.action.performed += OnAppButtonPressed;
     }
 }
 
 private void OnDisable() {
-    if (voiceToggleAction != null) {
-        voiceToggleAction.action.performed -= OnVoiceActionExecuted;
-        voiceToggleAction.action.Disable();
+    if (appButtonAction != null) {
+        appButtonAction.action.performed -= OnAppButtonPressed;
+        appButtonAction.action.Disable();
     }
 }
 
-private void OnVoiceActionExecuted(InputAction.CallbackContext context) {
-    // Guard checking ensuring this only fires on the down-press execution window
+private void OnAppButtonPressed(InputAction.CallbackContext context) {
     if (context.ReadValueAsButton()) {
-        Debug.Log("Input Map Match: Calling Voice Registration Toggle.");
-        ToggleSpeechRegistration();
+        // Respond to button press
     }
 }
 ```
