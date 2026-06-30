@@ -3,4 +3,5 @@
 | Link | Description |
 | ---- | ----------- |
 | [setup.md](setup.md) | How to set up the development environment and build pipeline |
+| [basics.md](basics.md) | Some basic elements of XR development with XREAL |
 | [xreal_eye.md](xreal_eye.md) | How to interact with the XREAL Eye camera attachment |
