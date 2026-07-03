@@ -6,7 +6,7 @@
 
 ## Prerequisites
 
-- A Unity project configured as described in [setup.md](setup.md)
+- Unity project configured as described in [setup.md](setup.md)
 
 ## Set up a scene from scratch
 
@@ -23,13 +23,14 @@
 
 ## Respond to the App button
 
-1. Open `Assets/InputSystem_Actions`, imported with the Starter Assets sample of the XR Interaction Toolkit (or, create a new input system via `Right click > Create > Input Actions`).
+1. Open `Assets/InputSystem_Actions` (or, create a new input system via `Right click > Create > Input Actions`).
 2. Click the "+" icon in the "Action Maps" header.
 3. Rename the new map appropriately (e.g. "XREAL").
 4. Select the map and rename the default action it contains appropriately (e.g. "App Button"). Also ensure the action type is set to Button.
 5. Expand the action, select "\<No binding>", then set "Path" to `XR Controller > XREAL Controller > ButtonId0`.
 6. Respond to the button via a script such as the following:
 ```csharp
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class AppButtonExample : MonoBehaviour {
