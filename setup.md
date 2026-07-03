@@ -29,7 +29,7 @@
 2. Enable developer mode on the phone (see [here](https://www.android.com/intl/en_uk/articles/enable-android-developer-settings/)).
 3. Connect the glasses to the phone and go to `Settings > Connected devices > Samsung DeX > Connected display`. Switch from "Extended" to "Mirrored" mode
    (Extended mode conflicts with the GlassesControl app).<br>
-   Once this step is complete, disconnect the glasses (otherwise the GlassesControl app will keep trying to connect to them).
+   **Note**: Once this step is complete, disconnect the glasses (otherwise the GlassesControl app will keep trying to connect to them).
 4. Install the GlassesControl (aka Control Glasses) app from the app store (see [here](https://play.google.com/store/apps/details?id=com.xreal.glassescontrol.store&hl=en-US)).<br>
    **Note**: Do not use the GlassesControl APK provided on the XREAL SDK website, as it is not properly aligned for modern Android versions.
 5. In the GlassesControl app, ensure the Refresh Rate is set to 60hz and Screen Mirroring is disabled.
@@ -78,7 +78,7 @@ See [here](https://github.com/juicycleff/flutter-unity-view-widget/issues/643) f
 
 ## (Optional) Set up wireless debugging
 
-**Note**: While technically optional, this step is highly recommended to simplify on-device testing.
+While technically optional, this step is highly recommended to simplify on-device testing.
 
 1. Enable wireless debugging on the phone (`Settings > Developer options > Wireless debugging`).
 2. Pair the phone with the computer (see [here](https://developer.android.com/tools/adb#connect-to-a-device-over-wi-fi)).
@@ -86,6 +86,8 @@ See [here](https://github.com/juicycleff/flutter-unity-view-widget/issues/643) f
 ```
 adb connect <phone IP address and port>
 ```
+
+**Note**: These steps may need to be repeated whenever wireless debugging is toggled on the phone (such as after rebooting), or when switching wireless networks.
 
 ## Build and deploy a sample scene
 
