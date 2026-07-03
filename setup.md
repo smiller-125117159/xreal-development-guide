@@ -1,11 +1,18 @@
 # Getting Started with XREAL Development
 
+- [Prerequisites](#prerequisites)
 - [Hardware used](#hardware-used)
 - [Set up the development environment](#set-up-the-development-environment)
 - [Set up a Unity project](#set-up-a-unity-project)
 - [(Optional) Improve build speeds](#optional-improve-build-speeds)
 - [(Optional) Set up wireless debugging](#optional-set-up-wireless-debugging)
 - [Build and deploy a sample scene](#build-and-deploy-a-sample-scene)
+
+## Prerequisites
+
+- Google Chrome
+- Unity account
+- Data-capable USB-C cable
 
 ## Hardware used
 
@@ -23,25 +30,22 @@
 3. Connect the glasses to the phone and go to `Settings > Connected devices > Samsung DeX > Connected display`. Switch from "Extended" to "Mirrored" mode
    (Extended mode conflicts with the GlassesControl app).<br>
    Once this step is complete, disconnect the glasses (otherwise the GlassesControl app will keep trying to connect to them).
-4. Install the GlassesControl (aka Control Glasses) app from the app store (see [here](https://play.google.com/store/apps/details?id=com.xreal.glassescontrol.store&hl=en-US))[^1.1].
+4. Install the GlassesControl (aka Control Glasses) app from the app store (see [here](https://play.google.com/store/apps/details?id=com.xreal.glassescontrol.store&hl=en-US)).<br>
+   **Note**: Do not use the GlassesControl APK provided on the XREAL SDK website, as it is not properly aligned for modern Android versions.
 5. In the GlassesControl app, ensure the Refresh Rate is set to 60hz and Screen Mirroring is disabled.
    Camera Access can remain enabled.
 6. Connect the glasses to the phone. If successful, the GlassesControl app should open automatically
     and (after a moment) display a green check and a message starting with "SDK ready" under Status Monitor.
     The glasses' firmware version should also be displayed under Firmware Management.
-7. Install `adb` (Android Debug Bridge) on the computer (see [here](https://developer.android.com/tools/adb))[^1.2].
+7. Install `adb` (Android Debug Bridge) on the computer (see [here](https://developer.android.com/tools/adb)).<br>
+   **Note**: Unity installs the Android SDK as part of the Android Build Support module (see step 1 of [Set up a Unity project](#set-up-a-unity-project)). This means you can instead use its version of `adb`, which on my machine ended up at `C:\Program Files\Unity\Hub\Editor\6000.0.77f1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\platform-tools`.
 8. (Optional) Add the install location of `adb` to the system Path.
-
-[^1.1]: Do not use the GlassesControl APK provided on the XREAL SDK website, as it is not properly aligned for modern Android versions.
-[^1.2]: Unity installs the Android SDK as part of the Android Build Support module (see step 1 of [Set up a Unity project](#set-up-a-unity-project)).
-This means you can instead use its version of `adb`, which on my machine ended up at
-`C:\Program Files\Unity\Hub\Editor\6000.0.77f1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\platform-tools`.
 
 ## Set up a Unity project
 
 1. Install Unity Hub (see [here](https://unity.com/download); requires a Unity account) and the Unity 6.0 (6000.0.X) LTS version of the editor. Ensure the Android Build Support module is also
     installed.<br>
-    Later editor versions seem presently incompatible with the XREAL SDK.
+    **Note**: Later editor versions seem presently incompatible with the XREAL SDK.
 2. Create a new Unity project. Ensure the Editor version is set to 6000.0.X and select the "3D (Built-In Render Pipeline)"
     project template[^2.1]. Set the project name and location and click "Create project".
 3. Go to `File > Build Profiles`, select Android in the list on the left, and click "Switch Platform".
@@ -78,8 +82,10 @@ See [here](https://github.com/juicycleff/flutter-unity-view-widget/issues/643) f
 
 1. Enable wireless debugging on the phone (`Settings > Developer options > Wireless debugging`).
 2. Pair the phone with the computer (see [here](https://developer.android.com/tools/adb#connect-to-a-device-over-wi-fi)).
-3. Activate the connection by entering `adb connect <phone IP address and port>`.<br>
-   The phone's IP address and port can be found at the top of the "Wireless debugging" settings page from step 1.
+3. Activate the connection with the following command. The phone's IP address and port can be found at the top of the "Wireless debugging" settings page from step 1.
+```
+adb connect <phone IP address and port>
+```
 
 ## Build and deploy a sample scene
 
@@ -88,9 +94,11 @@ To verify everything has been set up properly, it is recommended to test with th
 1. In the Unity project created above, open the "HelloMR" scene (`Assets/Samples/XREAL XR Plugin/3.0.0/Interaction Basics/HelloMR.unity`).
 2. Go to `File > Build Profiles`, select "Scene List" on the left, click "Add Open Scenes", and deselect any scenes other than HelloMR.
 3. Select "Android" on the left, click "Build", and select a location for the resulting APK.
-4. Once the build is complete (which may take several minutes), open a terminal and run `adb install -r <apk file path>`. This
-   should install the app on the phone after a bit of time.<br>
+4. Once the build is complete (which may take several minutes), open a terminal and run the following command. This should install the app on the phone after a bit of time.<br>
    **Note**: The `-r` flag causes any previous version of the app to be overwritten, so you do not need to uninstall the old version each
    time you want to test a new one.
+```
+adb install -r <apk file path>
+```
 5. Connect the XREAL glasses to the phone. Once the GlassesControl app has registered the glasses, launch the newly created app.
 6. (Optional) Set the app to launch automatically when the glasses are first connected via the GlassesControl app.
