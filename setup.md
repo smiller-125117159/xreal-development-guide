@@ -61,6 +61,8 @@
 9. Go through the table of settings [here](https://docs.xreal.com/Getting%20Started%20with%20XREAL%20SDK#manual-configuration) to
     verify the project settings are correct. In particular, make sure "Minimum API Level" is set to Android 10.0 or higher.
 10. Also verify that "Scripting Backend" is set to IL2CPP and ARM64 is selected under "Target Architectures".
+11. Under `Player > Publishing Settings`, enable "Custom Main Gradle Template".
+    This will create the file `Assets/Plugins/Android/mainTemplate.gradle` in your project, which will be needed when creating custom Android plug-ins.
 
 [^2.1]: The Universal Render Pipeline (URP) should be supported by the XREAL SDK; however, it seems rather finnicky to get
 working correctly, so sticking with the Built-In Render Pipeline is recommended unless and until you need URP.
