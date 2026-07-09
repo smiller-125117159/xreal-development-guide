@@ -6,3 +6,4 @@
 | [basics.md](basics.md) | Some basic elements of XR development with XREAL |
 | [xreal_eye.md](xreal_eye.md) | How to interact with the XREAL Eye camera attachment |
 | [text.md](text.md) | Integrating text recognition |
+| [translate.md](translate.md) | Integrating language identification and translation |
