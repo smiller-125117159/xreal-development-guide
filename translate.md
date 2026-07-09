@@ -42,16 +42,16 @@ public class TranslatePlugin {
                     return;
                 }
                 
-                String resolvedSourceLang = TranslateLanguage.fromLanguageTag(sourceLangCode);
+                String resolvedSourceLang = TranslateLanguage.fromLanguageTag(languageCode);
     
                 if (resolvedSourceLang == null) {
-                    UnityPlayer.UnitySendMessage(gameObject, callback, "ERROR:Detected language (" + sourceLangCode + ") is unsupported.");
+                    UnityPlayer.UnitySendMessage(gameObject, callback, "ERROR:Detected language (" + languageCode + ") is unsupported.");
                     return;
                 }
 
                 TranslatorOptions options = new TranslatorOptions.Builder()
                         .setSourceLanguage(resolvedSourceLang) 
-                        .setTargetLanguage(TranslateLanguage.ENGLISH)
+                        .setTargetLanguage(TranslateLanguage.ENGLISH) // Note: Hardcoded target language
                         .build();
                         
                 final Translator translator = Translation.getClient(options);
@@ -59,7 +59,7 @@ public class TranslatePlugin {
 
                 translator.downloadModelIfNeeded(conditions)
                         .addOnSuccessListener(v -> {
-                            translator.translate(text)
+                            translator.translate(textToTranslate)
                                 .addOnSuccessListener(translatedText -> {
                                     UnityPlayer.UnitySendMessage(gameObject, callback, "SUCCESS:" + translatedText);
                                     translator.close();
