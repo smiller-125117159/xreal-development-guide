@@ -9,3 +9,4 @@
 | [translate.md](translate.md) | Integrating language identification and translation |
 | [voice.md](voice.md) | Adding voice commands via speech-to-text |
 | [tts.md](tts.md) | Integrating text-to-speech |
+| [face.md](face.md) | Integrating facial recognition |
